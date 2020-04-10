@@ -153,6 +153,6 @@ void SSD1306_clear(pixelColor_t colour);
  * @brief draws the current frame buffer to the display
  * 
  */
-void SSD1306_update(I2C_HandleTypeDef *hi2c);
+void SSD1306_update();
 
 #endif

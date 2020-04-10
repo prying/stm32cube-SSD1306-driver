@@ -58,7 +58,7 @@ void SSD1306_init(I2C_HandleTypeDef *hi2cIn)
 }
 
 
-void SSD1306_deInit(I2C_HandleTypeDef *hi2c)
+void SSD1306_deInit()
 {
 	while (HAL_I2C_GetState(hi2c) != HAL_I2C_STATE_READY);
 
@@ -92,7 +92,7 @@ void SSD1306_clear(pixelColor_t colour)
 	memset(frameBuffer, colour, sizeof(frameBuffer));
 }
 
-void SSD1306_update(I2C_HandleTypeDef *hi2c)
+void SSD1306_update()
 {
 	// Go to home
 	sendComand(SSD1306_CMD_COLUMN_ADDR);
