@@ -89,7 +89,7 @@ void SSD1306_setContrast(uint8_t contrast)
 
 void SSD1306_clear(pixelColor_t colour)
 {
-	memset(frameBuffer, 0xf0, sizeof(frameBuffer));
+	memset(frameBuffer, colour, sizeof(frameBuffer));
 }
 
 void SSD1306_update(I2C_HandleTypeDef *hi2c)
