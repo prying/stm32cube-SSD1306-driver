@@ -1,7 +1,8 @@
 #include "SSD1306.h"
 #include "memory.h"
-// Video ram
-static uint8_t displayRam[SSD1306_COLUMN * SSD1306_PAGE] = {0};
+
+static uint8_t frameBuffer[SSD1306_COLUMN * SSD1306_PAGE] = {0};
+// Should i be using a global variable??
 static I2C_HandleTypeDef *hi2c;
 
 void sendComand(uint8_t cmd);
@@ -68,8 +69,18 @@ void SSD1306_deInit(I2C_HandleTypeDef *hi2c)
 	// Remove reffrence to display
 	hi2c = NULL;
 }
-//void SSD1306_comand(uint8_t cmd);
-//void SSD1306_setContrast(uint8_t contrast);
+
+void SSD1306_comand(uint8_t cmd)
+{
+	sendComand(cmd);
+}
+
+void SSD1306_setContrast(uint8_t contrast)
+{
+	// Any uint8 will work as it IS the range 0-256
+	sendComand(SSD1306_CMD_SET_CONTRAST);
+	sendComand(contrast);
+}
 //void SSD1306_invertDisplay();
 
 //void SSD1306_drawPixle(uint8_t x, uint8_t y, pixelColor_t colour);
@@ -78,7 +89,7 @@ void SSD1306_deInit(I2C_HandleTypeDef *hi2c)
 
 void SSD1306_clear(pixelColor_t colour)
 {
-	memset(displayRam, 0xf0, sizeof(displayRam));
+	memset(frameBuffer, 0xf0, sizeof(frameBuffer));
 }
 
 void SSD1306_update(I2C_HandleTypeDef *hi2c)
@@ -94,7 +105,7 @@ void SSD1306_update(I2C_HandleTypeDef *hi2c)
 	// Update hole display
 	for (int page = 0; page < SSD1306_PAGE; page++)
 	{
-		sendBytes(&displayRam[page*SSD1306_COLUMN], SSD1306_COLUMN);
+		sendBytes(&frameBuffer[page*SSD1306_COLUMN], SSD1306_COLUMN);
 	}
 }
 

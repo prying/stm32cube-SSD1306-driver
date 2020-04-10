@@ -116,14 +116,31 @@ typedef enum{
  * @return HAL_StatusTypeDef HAL_OK if succes
  */
 void SSD1306_init(I2C_HandleTypeDef *hi2cIn);
-//void SSD1306_deInit();
-//void SSD1306_comand(uint8_t cmd);
-//void SSD1306_setContrast(uint8_t contrast);
-//void SSD1306_invertDisplay();
 
-//void SSD1306_drawPixle(uint8_t x, uint8_t y, pixelColor_t colour);
-//void SSD1306_drawLine(uint8_t x0, uint8_t y0, uint8_t x1, uint8_t y1, pixelColor_t colour);
-//void SSD1306_print(char * text, uint16_t size, uint8_t x, uint8_t y, pixelColor_t colour, textSize_t fontSize);
+/**
+ * @brief deint should be called when/before hi2c refrence is released or changing display
+ * 
+ */
+void SSD1306_deInit();
+
+/**
+ * @brief Send command to SSD1306 (refure to datasheet)
+ * 
+ * @param cmd comand to be sent
+ */
+void SSD1306_comand(uint8_t cmd);
+
+/**
+ * @brief Set contrast of display
+ * 
+ * @param contrast a value between 1-256
+ */
+void SSD1306_setContrast(uint8_t contrast);
+void SSD1306_invertDisplay();
+
+void SSD1306_drawPixle(uint8_t x, uint8_t y, pixelColor_t colour);
+void SSD1306_drawLine(uint8_t x0, uint8_t y0, uint8_t x1, uint8_t y1, pixelColor_t colour);
+void SSD1306_print(char * text, uint16_t size, uint8_t x, uint8_t y, pixelColor_t colour, textSize_t fontSize);
 
 /**
  * @brief clears the frame buffer
